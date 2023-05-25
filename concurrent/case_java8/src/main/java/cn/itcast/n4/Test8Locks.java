@@ -19,6 +19,9 @@ public class Test8Locks {
         }).start();
     }
 }
+//主要看synchronized锁住的是谁，如果是static,则锁的是类，如果不加static，锁的是对象，对象是会互斥的；而且类和对象不会互斥
+
+//该题两个一起跑，同一个对象，所以先2后1，因为a,b虽然同时运行，但是第一个线程等了1s
 @Slf4j(topic = "c.Number")
 class Number{
     public synchronized void a() {
