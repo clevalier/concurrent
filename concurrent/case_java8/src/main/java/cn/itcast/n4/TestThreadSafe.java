@@ -16,7 +16,7 @@ public class TestThreadSafe {
     }
 }
 class ThreadUnsafe {
-    ArrayList<String> list = new ArrayList<>();
+    ArrayList<String> list = new ArrayList<>();//不在方法内部，是共享的资源，所以会不安全
     public void method1(int loopNumber) {
         for (int i = 0; i < loopNumber; i++) {
             method2();
@@ -24,7 +24,7 @@ class ThreadUnsafe {
         }
     }
 
-    private void method2() {
+    private void method2() {   //private可以保护线程安全，如果用public，那么子类会重新创建线程，从而触发线程安全的问题
         list.add("1");
     }
 
@@ -34,8 +34,8 @@ class ThreadUnsafe {
 }
 
 class ThreadSafe {
-    public final void method1(int loopNumber) {
-        ArrayList<String> list = new ArrayList<>();
+    public final void method1(int loopNumber) {  //final防止子类重写方法
+        ArrayList<String> list = new ArrayList<>();//局部变量，线程独自创造实例，线程是安全的
         for (int i = 0; i < loopNumber; i++) {
             method2(list);
             method3(list);

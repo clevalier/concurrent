@@ -54,7 +54,7 @@ class Account {
 
     // 转账
     public void transfer(Account target, int amount) {
-        synchronized(Account.class) {
+        synchronized(Account.class) {//必须锁住这个类，如果用this或者target或者amount不行，等于只锁住了一个；同时锁住target和amount会导致死锁
             if (this.money >= amount) {
                 this.setMoney(this.getMoney() - amount);
                 target.setMoney(target.getMoney() + amount);
