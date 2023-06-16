@@ -26,6 +26,7 @@ public class TestBiased {
         log.debug("begin");
         for (int i = 0; i < 6; i++) {
             Dog d = new Dog();
+            //d.hashCode();当一个对象调用hashcode方法的时候，会撤销偏向锁，因为偏向锁的线程id是54位，hashcode是31位，塞不下；偏向锁尾巴101，正常是001
             log.debug(ClassLayout.parseInstance(d).toPrintableSimple(true));
             Thread.sleep(1000);
         }
