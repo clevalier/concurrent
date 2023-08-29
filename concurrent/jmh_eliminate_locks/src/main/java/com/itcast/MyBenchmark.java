@@ -43,7 +43,7 @@ public class MyBenchmark {
         x++;
     }
     @Benchmark
-    // JIT  java -jar benchmarks.jar即时编译器对Java的字节码进一步优化，手段之一是看局部变量是否能优化，看o能否被共享，如果o不能被共享，则加锁的操作会被优化掉，执行的时候没有加锁，也就是锁消除
+    // JIT  java -jar benchmarks.jar即时  编译器对Java的字节码进一步优化，手段之一是看局部变量是否能优化，看o能否被共享，如果o不能被共享，则加锁的操作会被优化掉，执行的时候没有加锁，也就是锁消除
     //启动的时候加上jvm参数，java -XX:-EliminateLocks -jar benchmarks.jar即可不进行锁消除。
 
     public void b() throws Exception {

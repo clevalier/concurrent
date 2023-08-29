@@ -42,7 +42,7 @@ public class TestCorrectPostureStep2 {
             synchronized (room) {
                 hasCigarette = true;
                 log.debug("烟到了噢！");
-                room.notify();
+                room.notify();//要放在synchronized代码块里面，别的干活人线程不要阻塞
             }
         }, "送烟的").start();
     }

@@ -38,7 +38,7 @@ public class TestWaitNotify {
         sleep(0.5);
         log.debug("唤醒 obj 上其它线程");
         synchronized (obj) {
-//            obj.notify(); // 唤醒obj上一个线程
+//            obj.notify(); // 唤醒obj上一个线程,t1和t2都有可能唤醒       
             obj.notifyAll(); // 唤醒obj上所有等待线程
         }
     }
