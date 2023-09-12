@@ -16,7 +16,7 @@ public class Test19 {
                     lock.wait(20000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
-                }
+                }   
             }
         }, "t1").start();
 

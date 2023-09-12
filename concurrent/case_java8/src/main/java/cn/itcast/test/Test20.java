@@ -13,7 +13,7 @@ public class Test20 {
         for (int i = 0; i < 3; i++) {
             new People().start();
         }
-        Sleeper.sleep(1);
+        Sleeper.sleep(1);//1s之后邮递员开始送信
         for (Integer id : Mailboxes.getIds()) {
             new Postman(id, "内容" + id).start();
         }
@@ -51,21 +51,22 @@ class Postman extends Thread {
 }
 
 class Mailboxes {
+    //解耦结果产生者和结果输出者的一种模式
     private static Map<Integer, GuardedObject> boxes = new Hashtable<>();
 
     private static int id = 1;
     // 产生唯一 id
-    private static synchronized int generateId() {
+    private static synchronized int generateId() {//加synchronized保证id的唯一，给线程加锁
         return id++;
     }
 
     public static GuardedObject getGuardedObject(int id) {
-        return boxes.remove(id);
+        return boxes.remove(id);//根据键值得到返回值，用完以后删除
     }
 
     public static GuardedObject createGuardedObject() {
         GuardedObject go = new GuardedObject(generateId());
-        boxes.put(go.getId(), go);
+        boxes.put(go.getId(), go);//创建以后把他放进去，本身是线程安全的，不用自己加synchronized
         return go;
     }
 
@@ -92,6 +93,7 @@ class GuardedObject {
     private Object response;
 
     // 获取结果
+    //保护性暂停模式
     // timeout 表示要等待多久 2000
     public Object get(long timeout) {
         synchronized (this) {
