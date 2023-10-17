@@ -11,17 +11,17 @@ public class Test21 {
 
     public static void main(String[] args) {
         MessageQueue queue = new MessageQueue(2);
-
+        //生产者线程
         for (int i = 0; i < 3; i++) {
             int id = i;
             new Thread(() -> {
                 queue.put(new Message(id , "值"+id));
             }, "生产者" + i).start();
         }
-
+        //消费者线程
         new Thread(() -> {
             while(true) {
-                sleep(1);
+                sleep(1);//每隔1s消费一下
                 Message message = queue.take();
             }
         }, "消费者").start();
@@ -29,11 +29,11 @@ public class Test21 {
 
 }
 
-// 消息队列类 ， java 线程之间通信
+// 消息队列类 ， java 线程之间通信，rocketmq是进程间通信
 @Slf4j(topic = "c.MessageQueue")
 class MessageQueue {
     // 消息的队列集合
-    private LinkedList<Message> list = new LinkedList<>();
+    private LinkedList<Message> list = new LinkedList<>();//双向队列，一边存一遍取，所以用linkedList
     // 队列容量
     private int capcity;
 
@@ -44,11 +44,11 @@ class MessageQueue {
     // 获取消息
     public Message take() {
         // 检查队列是否为空
-        synchronized (list) {
+        synchronized (list) {//获取list的锁，才能等待
             while(list.isEmpty()) {
                 try {
                     log.debug("队列为空, 消费者线程等待");
-                    list.wait();
+                    list.wait();//list是共享的
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -63,7 +63,7 @@ class MessageQueue {
 
     // 存入消息
     public void put(Message message) {
-        synchronized (list) {
+        synchronized (list) {//先锁住对象
             // 检查对象是否已满
             while(list.size() == capcity) {
                 try {
@@ -76,13 +76,13 @@ class MessageQueue {
             // 将消息加入队列尾部
             list.addLast(message);
             log.debug("已生产消息 {}", message);
-            list.notifyAll();
+            list.notifyAll();//通知给别人
         }
     }
 }
 
 final class Message {
-    private int id;
+    private int id; //为了线程间通信确定是哪个线程
     private Object value;
 
     public Message(int id, Object value) {
