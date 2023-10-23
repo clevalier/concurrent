@@ -20,6 +20,8 @@ public class TestMultiLock {
 @Slf4j(topic = "c.BigRoom")
 class BigRoom {
 
+    //多把锁提高并发度，当然得是互不关联的业务
+    //缺点在于，如果一个线程需要获得多把锁，容易产生死锁
     private final Object studyRoom = new Object();
 
     private final Object bedRoom = new Object();
