@@ -39,7 +39,7 @@ public class TestWaitNotify {
         log.debug("唤醒 obj 上其它线程");
         synchronized (obj) {
 //            obj.notify(); // 唤醒obj上一个线程,t1和t2都有可能唤醒       
-            obj.notifyAll(); // 唤醒obj上所有等待线程
+            obj.notifyAll(); // 唤醒obj上所有等待线程 一开始t1,t2都在等待，走到43时候，t1，t2属于block阻塞状态，走到t2，表示t2竞争锁成功runable，t1是wait，成功以后运行，结束以后t1竞争锁
         }
     }
 }
