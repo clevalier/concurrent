@@ -6,9 +6,11 @@ import static cn.itcast.n2.util.Sleeper.sleep;
 
 @Slf4j(topic = "c.TestDeadLock")
 public class TestDeadLock {
+    //先jps，然后jstack+pid
     public static void main(String[] args) {
         test1();
     }
+    //死锁
 
     private static void test1() {
         Object A = new Object();
