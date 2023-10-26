@@ -28,7 +28,7 @@ public class TestCondition {
                 }
                 log.debug("等到了它的烟");
             } finally {
-                lock.unlock();
+                lock.unlock();//
             }
         }).start();
 
@@ -44,7 +44,7 @@ public class TestCondition {
                 }
                 log.debug("等到了它的早餐");
             } finally {
-                lock.unlock();
+                lock.unlock();//ReentrantLock的解锁放在finally里面
             }
         }).start();
 

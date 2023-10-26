@@ -62,7 +62,7 @@ public class Test24 {
             ROOM.lock();
             try {
                 hasTakeout = true;
-                waitTakeoutSet.signal();
+                waitTakeoutSet.signal();//叫醒有外卖的线程
             } finally {
                 ROOM.unlock();
             }
@@ -74,7 +74,7 @@ public class Test24 {
             ROOM.lock();
             try {
                 hasCigarette = true;
-                waitCigaretteSet.signal();
+                waitCigaretteSet.signal();//叫醒等待的小南的线程
             } finally {
                 ROOM.unlock();
             }
