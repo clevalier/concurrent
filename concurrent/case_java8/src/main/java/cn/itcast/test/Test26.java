@@ -9,14 +9,14 @@ public class Test26 {
     public static void main(String[] args) {
 
         Thread t1 = new Thread(() -> {
-            LockSupport.park();
+            LockSupport.park();//让t1线程先暂停一下
             log.debug("1");
         }, "t1");
         t1.start();
 
         new Thread(() -> {
             log.debug("2");
-            LockSupport.unpark(t1);
+            LockSupport.unpark(t1);//把线程1恢复运行
         },"t2").start();
     }
 }
