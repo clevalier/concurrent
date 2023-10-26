@@ -28,10 +28,10 @@ class WaitNotify {
     // 打印               a           1             2
     public void print(String str, int waitFlag, int nextFlag) {
         for (int i = 0; i < loopNumber; i++) {
-            synchronized (this) {
-                while(flag != waitFlag) {
+            synchronized (this) { //用this，因为同一个对象
+                while(flag != waitFlag) {//条件不成立
                     try {
-                        this.wait();
+                        this.wait();//进入等待
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

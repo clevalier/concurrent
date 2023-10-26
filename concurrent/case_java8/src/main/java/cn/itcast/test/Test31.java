@@ -30,11 +30,12 @@ public class Test31 {
 }
 
 class ParkUnpark {
+    //str表示要打印的内容，next表示要唤醒的线程
     public void print(String str, Thread next) {
         for (int i = 0; i < loopNumber; i++) {
-            LockSupport.park();
-            System.out.print(str);
-            LockSupport.unpark(next);
+            LockSupport.park();//让当前线程被阻塞
+            System.out.print(str);//唤醒以后开始打印t1线程
+            LockSupport.unpark(next);//唤醒下一个线程
         }
     }
 

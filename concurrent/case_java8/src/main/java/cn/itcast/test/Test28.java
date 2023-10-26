@@ -24,7 +24,7 @@ public class Test28 {
 
     }
 }
-
+//ReentrantLock有多个休息室等待
 @Slf4j(topic = "c.AwaitSignal")
 class AwaitSignal2 extends ReentrantLock {
     private Map<Thread, Condition[]> map = new HashMap<>();
@@ -54,24 +54,24 @@ class AwaitSignal2 extends ReentrantLock {
         }
         this.lock();
         try {
-            map.get(threads[0])[0].signal();
+            map.get(threads[0])[0].signal();//唤醒最开始线程的内容
         } finally {
             this.unlock();
         }
     }
-
+    //str表示要打印的内容
     public void print(String str) {
         for (int i = 0; i < loopNumber; i++) {
-            this.lock();
+            this.lock();//加锁
             try {
                 Condition[] conditions = map.get(Thread.currentThread());
-                conditions[0].await();
+                conditions[0].await();//进入到哪一间休息室等待
                 log.debug(str);
-                conditions[1].signal();
+                conditions[1].signal();//唤醒下一个休息室的线程
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } finally {
-                this.unlock();
+                this.unlock();//解锁
             }
         }
     }
