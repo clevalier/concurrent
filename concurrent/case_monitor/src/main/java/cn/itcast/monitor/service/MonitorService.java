@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 public class MonitorService {
 
     private volatile boolean stop;
-    private volatile boolean starting;
+    private volatile boolean starting; //对tomcat的线程可见
     private Thread monitorThread;
 
     public void start() {
@@ -65,5 +65,6 @@ public class MonitorService {
         // 不加打断需要等到下一次 sleep 结束才能退出循环，这里是为了更快结束
         monitorThread.interrupt();
     }
+    //犹豫模式主要用在一个线程发现另外一个线程或者本线程已经做了某一件相同的事儿，那么本线程无需再做了，直接返回；经常用来实现线程安全的单例
 
 }
