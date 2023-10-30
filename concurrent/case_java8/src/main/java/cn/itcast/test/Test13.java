@@ -21,17 +21,17 @@ class TwoPhaseTermination {
     // 监控线程
     private Thread monitorThread;
     // 停止标记
-    private volatile boolean stop = false;
+    private volatile boolean stop = false; //此处用volatile的目的是为了实现两段式的退出
     // 判断是否执行过 start 方法
-    private boolean starting = false;
+    private boolean starting = false;//不能用volatile，因为volatile是对最新的变量可见，这里只能用synchronized，保证第一个线程把值改了，释放了锁才可以起到监控start()的作用
 
     // 启动监控线程
     public void start() {
         synchronized (this) {
             if (starting) { // false
-                return;
+                return;//已经执行过，不用再创建监控线程了
             }
-            starting = true;
+            starting = true;//下次调用时候，直接到上一步的return
         }
         monitorThread = new Thread(() -> {
             while (true) {
